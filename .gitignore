@@ -1,0 +1,22 @@
+.DS_Store
+.vscode/*
+.idea/*
+node_modules/*
+*typings*
+*.zip
+npm-debug.log
+*typings*
+coverage/
+*.bak
+**/node_modules/**
+*history*
+.nyc_output
+logs
+dist
+.eslintcache
+.env
+cookies.txt
+
+# production
+src/ui/build
+ui/build

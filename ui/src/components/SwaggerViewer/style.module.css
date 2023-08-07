@@ -1,0 +1,11 @@
+.pageWrapper {
+    height: 100%;
+    transition: all .7s;
+    position: relative;
+    user-select: none;
+    overflow-y: scroll;
+}
+
+.swaggerViewer {
+    padding: 45px 40px 0;
+}

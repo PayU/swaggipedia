@@ -1,0 +1,113 @@
+@import '../../styles/colors.css';
+
+.sideBar {
+    background-color: var(--color-blue-background);
+    z-index: 1000;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all .7s;
+    position: relative;
+    user-select: none;
+    width: 270px;
+    min-width: 270px;
+    max-width: 270px;
+    flex: 0 0 270px;
+    overflow: hidden;
+}
+
+.banner {
+    background-color: var(--color-dark-blue);
+    padding: 19px 27px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #2c4466;
+}
+
+.banner .logoPlaceholder {
+    background-color: #2ecb85;
+    border-radius: 50px;
+    width: 33px;
+    height: 33px;
+    margin-right: 19px;
+}
+
+.banner .text {
+    color: white;
+    font-size: 25px;
+    font-family: 'Pacifico', cursive;
+}
+
+.swaggerSearch {
+    padding: 18px 15px;
+}
+
+.swaggerSearch .inputWrapper {
+    background-color: var(--color-white-background);
+    border-radius: 10px;
+    height: 42px;
+    border: 1px solid #08203b69;
+    display: flex;
+    align-items: center;
+}
+.swaggerSearch .inputWrapper--disabled {
+    background-color: var(--color-disabled-gray-background);
+    cursor: not-allowed;
+}
+
+.swaggerSearch .inputWrapper .searchIcon {
+    color: var(--color-dark-blue);
+    margin: 0 10px 0 15px;
+    font-size: 14px;
+}
+.swaggerSearch .inputWrapper--disabled .searchIcon {
+    color: var(--color-blue-disabled);
+}
+
+.swaggerSearch .inputWrapper input {
+    background: none;
+    border: none;
+    color: var(--color-dark-blue);
+    outline: none;
+    font-size: 15px;
+}
+.swaggerSearch .inputWrapper input:disabled {
+    cursor: not-allowed;
+}
+
+.swaggerSearch .inputWrapper input::placeholder {
+    color: var(--color-dark-blue);
+    font-size: 13px;
+}
+
+.swaggerSearch .inputWrapper--disabled input::placeholder {
+    color: var(--color-blue-disabled);
+}
+
+.navigation {
+    padding-bottom: 25px;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.navigation .swagger {
+    color: var(--color-white-text);
+    padding: 21px 10px 21px 35px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color-blue-border);
+    transition: all 0.15s;
+}
+
+.navigation .swagger:first-child {
+    border-top: 1px solid var(--color-blue-border);
+}
+
+.navigation .swagger:hover , .navigation .swagger.selectedSwagger {
+    background-color: var(--color-blue-border);
+}

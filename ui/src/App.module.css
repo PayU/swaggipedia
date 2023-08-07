@@ -1,0 +1,7 @@
+.app {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    min-width: 1024px;
+    overflow-y: hidden;
+}

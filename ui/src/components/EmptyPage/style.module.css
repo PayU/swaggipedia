@@ -1,0 +1,30 @@
+@import '../../styles/colors.css';
+
+.emptyPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.noResults {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.noResults .title { 
+    margin-top: 20px;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--color-dark-gray);
+}
+
+.noResults .info { 
+    margin-top: 18px;
+    color: var(--color-dark-gray);
+    font-size: 15.5px;
+    font-weight: 300;
+}

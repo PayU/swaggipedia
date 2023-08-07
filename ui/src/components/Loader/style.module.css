@@ -1,0 +1,14 @@
+
+.loader {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background:#1c5388;
+    -webkit-mask:radial-gradient(circle closest-side at 50% 47%,#0000 94%, #000);
+    transform-origin: 50% 47%;
+    animation: s5 1s infinite linear;
+}
+
+@keyframes s5 {
+    100% {transform: rotate(1turn)}
+}

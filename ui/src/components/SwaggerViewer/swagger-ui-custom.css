@@ -1,0 +1,16 @@
+.swagger-ui {
+    min-width: 1090px;
+}
+
+.swagger-ui .info {
+    margin: 0;
+}
+
+.swagger-ui .scheme-container{
+    background: inherit;
+    box-shadow: inherit;
+}
+
+.swagger-ui section.models {
+    background: #ffffff33;
+}
