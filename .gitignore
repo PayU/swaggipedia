@@ -16,6 +16,7 @@ dist
 .eslintcache
 .env
 cookies.txt
+db/*
 
 # production
 src/ui/build

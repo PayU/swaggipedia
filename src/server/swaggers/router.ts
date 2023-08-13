@@ -32,7 +32,6 @@ export default function swaggersRouter(): Middleware {
     '/:swagger_id',
     openApiValidator(),
     findSwagger(),
-    swaggerDuplicationValidator(),
     swaggerParser(),
     (ctx) => swaggersController.updateSwagger(ctx)
   );

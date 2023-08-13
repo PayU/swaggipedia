@@ -1,6 +1,9 @@
 import { Middleware } from 'koa';
 import koaRouter from '@koa/router';
+import mount from 'koa-mount';
+import serve from 'koa-static';
 import { createReadStream } from 'fs';
+import path from 'path';
 
 export default function uiRouter(): Middleware {
   const router = new koaRouter();
@@ -15,4 +18,8 @@ export default function uiRouter(): Middleware {
   });
 
   return router.routes() as Middleware;
+}
+
+export function serveStaticFiles(): Middleware {
+  return mount('/ui', serve(path.join(__dirname, '..', '..', '/ui/build')));
 }
