@@ -4,12 +4,13 @@
   "description": "Lightweight open-source platform for browsing swagger APIs",
   "main": "false",
   "scripts": {
-    "start": "node -r ts-node/register -r dotenv/config --max_old_space_size=${MAX_OLD_SPACE_SIZE:=256} src/index.ts",
+    "start": "./scripts/startup-script.sh && node -r ts-node/register -r dotenv/config --max_old_space_size=${MAX_OLD_SPACE_SIZE:=256} src/index.ts",
     "start:dev": "npx nodemon"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.5",
     "@types/koa__router": "^12.0.0",
+    "@types/koa-mount": "^4.0.2",
     "@types/koa-static": "^4.0.2",
     "@types/node": "^18.16.18",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
@@ -36,6 +37,7 @@
     "js-yaml": "^4.1.0",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.1",
+    "koa-mount": "^4.0.0",
     "koa-static": "^5.0.0",
     "mariadb": "^3.2.0",
     "mysql2": "^3.5.2",

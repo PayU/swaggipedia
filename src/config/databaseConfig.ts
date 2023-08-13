@@ -4,7 +4,7 @@ const config = {
   address: process.env.DATABASE_ADDRESS,
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
-  sqliteStorage: process.env.SQLITE_STORAGE || 'swaggipedia.sqlite',
+  sqliteStorage: process.env.SQLITE_STORAGE || './db/swaggipedia.sqlite',
 };
 
 export default config;

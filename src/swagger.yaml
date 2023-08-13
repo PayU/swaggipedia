@@ -41,7 +41,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SwaggerRequest"
+              $ref: "#/components/schemas/SwaggerPostRequest"
       responses:
         201:
           description: "OK"
@@ -73,7 +73,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SwaggerRequest"
+              $ref: "#/components/schemas/SwaggerPutRequest"
       responses:
         200:
           description: "OK"
@@ -204,11 +204,20 @@ components:
       type: string
       minLength: 1
 
-    SwaggerRequest:
+    SwaggerPostRequest:
       type: object
       required:
         - name
         - data
+      additionalProperties: false
+      properties:
+        name:
+          $ref: "#/components/schemas/SwaggerName"
+        data:
+          $ref: "#/components/schemas/SwaggerData"
+
+    SwaggerPutRequest:
+      type: object
       additionalProperties: false
       properties:
         name:

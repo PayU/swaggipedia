@@ -54,14 +54,10 @@ export default class sequelizeConnector implements DatabaseConnector {
     logger.info('Migration completed');
   }
 
-  private async initializeModels(): Promise<void> {
-    SwaggerModel.initializeModel(this.client);
-  }
-
   public async initializeConnection(): Promise<void> {
     await this.client?.authenticate();
     await this.migrateDatabase();
-    await this.initializeModels();
+    SwaggerModel.initializeModel(this.client);
 
     await this.client.sync();
   }

@@ -1,0 +1,349 @@
+{
+  "openapi": "3.0.3",
+  "tags": [
+    {
+      "name": "Swaggers"
+    }
+  ],
+  "info": {
+    "title": "Swaggipedia - Api Catalog",
+    "description": "Api Catalog",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/v1/swaggers": {
+      "get": {
+        "tags": [
+          "Swaggers"
+        ],
+        "summary": "Get All Swaggers",
+        "description": "Get all swaggers (APIs) of the API-Catalog",
+        "operationId": "getSwagger",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwaggerResource"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Swaggers"
+        ],
+        "summary": "Create Swagger",
+        "description": "Add swagger to the API-Catalog",
+        "operationId": "createSwagger",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XSwaggerFormat"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwaggerPostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/v1/swaggers/{swagger_id}": {
+      "parameters": [
+        {
+          "name": "swagger_id",
+          "in": "path",
+          "description": "The required swagger id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/SwaggerId"
+          }
+        }
+      ],
+      "put": {
+        "tags": [
+          "Swaggers"
+        ],
+        "summary": "Update Swagger",
+        "description": "Update a swagger in the API-Catalog",
+        "operationId": "updateSwagger",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XSwaggerFormat"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwaggerPutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Swaggers"
+        ],
+        "summary": "Delete Swagger",
+        "description": "delete a swagger from the API-Catalog",
+        "operationId": "deleteSwagger",
+        "responses": {
+          "204": {
+            "description": "Invalidated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "XSwaggerFormat": {
+        "name": "x-swagger-format",
+        "in": "header",
+        "description": "The swagger format",
+        "example": "yaml",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "yaml",
+            "json"
+          ]
+        }
+      }
+    },
+    "responses": {
+      "NoContent": {
+        "description": "No Content."
+      },
+      "BadRequest": {
+        "description": "Bad request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal server error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "more_info": {
+            "type": "string",
+            "description": "More info about the error.",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        }
+      },
+      "SwaggerId": {
+        "description": "The swagger uuid",
+        "type": "string",
+        "pattern": "^[0-9A-Fa-f]{8}[-]?([0-9A-Fa-f]{4}[-]?){3}[0-9A-Fa-f]{12}$",
+        "example": "287d6dff-069b-47d0-8b7b-248c3399b8c4"
+      },
+      "CreatedAt": {
+        "description": "The time the object was created",
+        "type": "string",
+        "format": "date-time",
+        "example": "2020-05-20T00:00:00Z",
+        "readOnly": true
+      },
+      "UpdatedAt": {
+        "description": "The time the object was created",
+        "type": "string",
+        "format": "date-time",
+        "example": "2020-05-20T00:00:00Z",
+        "readOnly": true
+      },
+      "SwaggerName": {
+        "description": "The swagger name",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000
+      },
+      "SwaggerData": {
+        "description": "The swagger content",
+        "type": "string",
+        "minLength": 1
+      },
+      "SwaggerPostRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "data"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/SwaggerName"
+          },
+          "data": {
+            "$ref": "#/components/schemas/SwaggerData"
+          }
+        }
+      },
+      "SwaggerPutRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/SwaggerName"
+          },
+          "data": {
+            "$ref": "#/components/schemas/SwaggerData"
+          }
+        }
+      },
+      "SwaggerResource": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "data",
+          "created_at",
+          "updated_at"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/SwaggerId"
+          },
+          "name": {
+            "$ref": "#/components/schemas/SwaggerName"
+          },
+          "data": {
+            "$ref": "#/components/schemas/SwaggerData"
+          },
+          "created_at": {
+            "$ref": "#/components/schemas/CreatedAt"
+          },
+          "updated_at": {
+            "$ref": "#/components/schemas/UpdatedAt"
+          }
+        }
+      }
+    }
+  }
+}
