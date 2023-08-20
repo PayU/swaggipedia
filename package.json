@@ -8,9 +8,13 @@
     "start:dev": "npx nodemon"
   },
   "devDependencies": {
+    "@koa/router": "^12.0.0",
     "@types/js-yaml": "^4.0.5",
+    "@types/koa": "^2.13.8",
     "@types/koa__router": "^12.0.0",
+    "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-mount": "^4.0.2",
+    "@types/koa-router": "^7.4.4",
     "@types/koa-static": "^4.0.2",
     "@types/node": "^18.16.18",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
@@ -28,10 +32,6 @@
     "prettier": "^2.8.8"
   },
   "dependencies": {
-    "@koa/router": "^12.0.0",
-    "@types/koa": "^2.13.6",
-    "@types/koa-bodyparser": "^4.3.10",
-    "@types/koa-router": "^7.4.4",
     "dotenv": "^10.0.0",
     "http-status-codes": "^2.2.0",
     "js-yaml": "^4.1.0",

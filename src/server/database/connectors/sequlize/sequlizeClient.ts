@@ -1,7 +1,7 @@
 import { Sequelize, Options, Dialect } from 'sequelize';
 import { Umzug, SequelizeStorage } from 'umzug';
 import { DatabaseConnector } from '../types';
-import databaseConfig from '../../../../config/databaseConfig';
+import env from '../../../../helpers/env';
 import logger from '../../../../helpers/logger';
 import path from 'path';
 import SwaggerModel from '../../models/swagger';
@@ -11,23 +11,23 @@ export default class sequelizeConnector implements DatabaseConnector {
 
   constructor() {
     const options: Options = {
-      dialect: databaseConfig.type.toLowerCase() as Dialect,
+      dialect: env.DATABASE_TYPE.toLowerCase() as Dialect,
       logging: false,
-      host: databaseConfig.address,
+      host: env.DATABASE_ADDRESS,
       define: {
         underscored: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at',
       },
-      ...(databaseConfig.type === 'SQLITE' && {
-        storage: databaseConfig.sqliteStorage,
+      ...(env.DATABASE_TYPE === 'sqlite' && {
+        storage: env.SQLITE_STORAGE_PATH,
       }),
     };
 
     this.client = new Sequelize(
-      databaseConfig.name.toLowerCase(),
-      databaseConfig.username,
-      databaseConfig.password,
+      env.DATABASE_NAME.toLowerCase(),
+      env.DATABASE_USERNAME,
+      env.DATABASE_PASSWORD,
       options
     );
   }

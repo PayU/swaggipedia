@@ -20,12 +20,16 @@ docker run -d -p 3000:3000 --name my-swaggipedia zooz/swaggipedia
 
 **Configuring Swaggipedia**:
 > There are a small number of environment variables supported by the image:
+> - **LOG_LEVEL**: *One of: 'trace' | 'debug' | 'info' (Default) | 'warn' | 'error' | 'fatal'.*
 > - **DATABASE_TYPE**: *One of: 'sqlite' (Default) | 'mysql' | 'postgres' | 'mariadb' | 'mssql' | 'oracle'.*
 > - **DATABASE_ADDRESS**: *The host of the database.*
 > - **DATABASE_NAME**: *The name of the database.*
 > - **DATABASE_USERNAME**: *The username used to authenticate against the database.*
 > - **DATABASE_PASSWORD**: *The password used to authenticate against the database. Supports SQLCipher encryption for SQLite.*
+> - **SQLITE_STORAGE_PATH**: *The storage engine for sqlite (Only used by sqlite). Defaults to './db/swaggipedia.sqlite'.*
 > - **APP_BASE_NAME**: *Enables tweaking the public folder containing the HTML file (Swaggipedia UI).*
+> - **SECRETS_FILE_PATH**: *Path to a JSON file inside your Swaggipedia container that contains the application's secrets 'DATABASE_USERNAME' & 'DATABASE_PASSWORD'. (Commonly used by secrets management tools).*
+
 
 <br/>
 
