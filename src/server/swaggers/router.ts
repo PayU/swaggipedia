@@ -22,8 +22,8 @@ export default function swaggersRouter(): Middleware {
   router.post(
     '/',
     openApiValidator(),
-    swaggerDuplicationValidator(),
     swaggerParser(),
+    swaggerDuplicationValidator(),
     (ctx) => swaggersController.createSwagger(ctx)
   );
 
@@ -33,6 +33,7 @@ export default function swaggersRouter(): Middleware {
     openApiValidator(),
     findSwagger(),
     swaggerParser(),
+    swaggerDuplicationValidator(),
     (ctx) => swaggersController.updateSwagger(ctx)
   );
 

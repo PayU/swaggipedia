@@ -25,7 +25,9 @@ COPY tsconfig.json /usr/
 # Bundle ui source
 COPY --from=builder /usr/ui/build /usr/src/ui/build
 RUN chown -R node:node /usr/src/ui
+RUN chown -R node:node /usr/scripts
 RUN chmod 755 /usr/src/ui
+RUN chmod 755 /usr/scripts
 
 # Install app dependencies
 RUN npm ci --production --silent

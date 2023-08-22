@@ -15,4 +15,6 @@ if [ ! -e ./scripts/$CONTAINER_INITIALIZED ]; then
         echo "(!) Failed to initialize swaggipedia UI"
         echo "======================================="
     fi
+else
+    echo "(✓) Swaggipedia UI was already initialized."
 fi
