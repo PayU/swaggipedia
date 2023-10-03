@@ -17,6 +17,9 @@ export default function swaggersRouter(): Middleware {
   router.get('/', openApiValidator(), (ctx) =>
     swaggersController.getAllSwaggers(ctx)
   );
+  router.get('/:swagger_id', openApiValidator(), findSwagger(), (ctx) =>
+    swaggersController.getSwagger(ctx)
+  );
 
   // Create
   router.post(

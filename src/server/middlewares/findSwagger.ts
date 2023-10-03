@@ -1,12 +1,12 @@
 import { Context, Next } from 'koa';
 import { StatusCodes } from 'http-status-codes';
-import { SwaggerResource } from '../database/models/swagger';
+import SwaggerModel from '../database/models/swagger';
 import { SwaggersRepository } from '../database/repositories/swaggerRepo';
 import { ErrorMessages } from '../../helpers/common';
 
 declare module 'koa' {
   interface ExtendableContext {
-    swaggerResource?: SwaggerResource;
+    swaggerResource?: SwaggerModel;
   }
 }
 
