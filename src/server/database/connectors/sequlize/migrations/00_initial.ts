@@ -1,7 +1,17 @@
 import { DataTypes } from 'sequelize';
 import { TableNames } from '../../consts';
 
-export const up = async ({ context }) =>
+export const up = async ({ context }) => {
+  await context.createTable(TableNames.SWAGGERS_CONTENT_TABLE_NAME, {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
+    file_content: {
+      type: DataTypes.TEXT('long'),
+      allowNull: false,
+    },
+  });
   await context.createTable(TableNames.SWAGGERS_TABLE_NAME, {
     id: {
       type: DataTypes.UUID,
@@ -12,9 +22,13 @@ export const up = async ({ context }) =>
       type: DataTypes.STRING,
       allowNull: false,
     },
-    data: {
-      type: DataTypes.TEXT('long'),
+    file_content_id: {
+      type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: TableNames.SWAGGERS_CONTENT_TABLE_NAME,
+        key: 'id',
+      },
     },
     created_at: {
       type: DataTypes.DATE,
@@ -25,6 +39,7 @@ export const up = async ({ context }) =>
       allowNull: false,
     },
   });
+};
 
 export const down = async ({ context: queryInterface }) =>
   await queryInterface.dropTable(TableNames.SWAGGERS_TABLE_NAME);

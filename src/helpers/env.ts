@@ -33,8 +33,10 @@ const env: Env = {
   SQLITE_STORAGE_PATH:
     process.env.SQLITE_STORAGE_PATH || './db/swaggipedia.sqlite',
   PORT: Number(process.env.PORT) || 3000,
-  FORCE_SHUTDOWN_TIMEOUT_SEC: Number(process.env.FORCE_SHUTDOWN_TIMEOUT_SEC),
-  SHUTDOWN_INITIAL_DELAY_SEC: Number(process.env.SHUTDOWN_INITIAL_DELAY_SEC),
+  FORCE_SHUTDOWN_TIMEOUT_SEC:
+    Number(process.env.FORCE_SHUTDOWN_TIMEOUT_SEC) || 30,
+  SHUTDOWN_INITIAL_DELAY_SEC:
+    Number(process.env.SHUTDOWN_INITIAL_DELAY_SEC) || 5,
   SERVER_KEEP_ALIVE: Number(process.env.SERVER_KEEP_ALIVE),
 };
 

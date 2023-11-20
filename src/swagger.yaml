@@ -11,11 +11,18 @@ paths:
   # Swaggers
   /v1/swaggers:
     get:
+      parameters:
+        - in: query
+          name: expand
+          description: a parameter for including swagger file content to the response swaggers list
+          schema:
+            type: string
+            enum: ["file_content"]
       tags:
         - Swaggers
       summary: Get All Swaggers
       description: Get all swaggers (APIs) of the API-Catalog
-      operationId: getSwagger
+      operationId: getSwaggers
       responses:
         200:
           description: "OK"
@@ -61,6 +68,23 @@ paths:
         required: true
         schema:
           $ref: "#/components/schemas/SwaggerId"
+    get:
+      tags:
+        - Swaggers
+      summary: Get Swagger
+      description: Get a swagger in the API-Catalog
+      operationId: getSwagger
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SwaggerResource"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        500:
+          $ref: "#/components/responses/InternalServerError"
     put:
       tags:
         - Swaggers
@@ -208,12 +232,12 @@ components:
       type: object
       required:
         - name
-        - data
+        - file_content
       additionalProperties: false
       properties:
         name:
           $ref: "#/components/schemas/SwaggerName"
-        data:
+        file_content:
           $ref: "#/components/schemas/SwaggerData"
 
     SwaggerPutRequest:
@@ -222,7 +246,7 @@ components:
       properties:
         name:
           $ref: "#/components/schemas/SwaggerName"
-        data:
+        file_content:
           $ref: "#/components/schemas/SwaggerData"
 
     SwaggerResource:
@@ -230,7 +254,7 @@ components:
       required:
         - id
         - name
-        - data
+        - file_content
         - created_at
         - updated_at
       additionalProperties: false
@@ -239,7 +263,7 @@ components:
           $ref: "#/components/schemas/SwaggerId"
         name:
           $ref: "#/components/schemas/SwaggerName"
-        data:
+        file_content:
           $ref: "#/components/schemas/SwaggerData"
         created_at:
           $ref: "#/components/schemas/CreatedAt"
