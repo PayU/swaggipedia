@@ -1,59 +1,71 @@
 import { useEffect, useState } from 'react';
+import isEmpty from 'lodash/isEmpty'
 import SideBar from './components/SideBar/SideBar';
-import SwaggerViewer from './components/SwaggerViewer/SwaggerViewer';
+import SwaggerPanel from './components/SwaggerPanel/SwaggerPanel';
 import SwaggersApi from './apis/SwaggersApi';
 
 import styles from './App.module.css';
 import EmptyPage from './components/EmptyPage/EmptyPage';
 
+import 'tippy.js/dist/tippy.css';
+
 function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [swaggersMap, setSwaggersMap] = useState({})
-  const [swaggerTitles, setSwaggerTitles] = useState([])
-  const [selectedSwaggerTitle, setSelectedSwaggerTitle] = useState('')
+  const [selectedSwagger, setSelectedSwagger] = useState()
   const [swaggerContentMap, setSwaggerContentMap] = useState({})
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchAllSwaggers() {
       setIsLoading(true);
 
-      const fetchedSwaggers = await SwaggersApi.fetchSwaggers() || [];
+      const fetchedSwaggers = await SwaggersApi.fetchSwaggers() || {};
       setSwaggersMap(fetchedSwaggers);
 
-      const swaggerTitles = Object.keys(fetchedSwaggers);
-      setSwaggerTitles(swaggerTitles);
-      setSelectedSwaggerTitle(swaggerTitles[0]);
-      await getSwaggerContentIfNeeded(fetchedSwaggers[swaggerTitles[0]]?.id)
+      const initialSelectedSwagger = fetchedSwaggers[Object.keys(fetchedSwaggers)[0]];
+      setSelectedSwagger(initialSelectedSwagger);
 
       setIsLoading(false);
     }
 
-    fetchData();
+    fetchAllSwaggers();
   }, [])
 
-  const getSwaggerContentIfNeeded = async (swaggerId) => {
-    if (!swaggerContentMap[swaggerId]) {
-      const swaggerContent = await SwaggersApi.fetchSwaggerContent(swaggerId)
+  useEffect(() => {
+    async function fetSelectedSwaggerContent() {
+      const swaggerContent = await SwaggersApi.fetchSwaggerContent(selectedSwagger.id)
       setSwaggerContentMap({
         ...swaggerContentMap,
-        [swaggerId]: swaggerContent.file_content
+        [selectedSwagger.id]: swaggerContent.file_content
       })
     }
-  }
+
+    if (selectedSwagger?.id && !swaggerContentMap[selectedSwagger.id]) {
+      fetSelectedSwaggerContent();
+    }
+  }, [selectedSwagger, swaggerContentMap])
 
   return (
     <div className={styles.app}>
       <SideBar
-        swaggerTitles={swaggerTitles}
-        selectedSwaggerTitle={selectedSwaggerTitle}
-        onSwaggerSelected={(swaggerTitle) => {
-          setSelectedSwaggerTitle(swaggerTitle)
-          getSwaggerContentIfNeeded(swaggersMap[swaggerTitle]?.id)
-        }}
+        swaggersMap={swaggersMap}
+        selectedSwagger={selectedSwagger}
+        onSwaggerSelected={setSelectedSwagger}
       />
-      {(isLoading || (!isLoading && swaggerTitles.length === 0)) ?
+      {(isLoading || (!isLoading && isEmpty(swaggersMap))) ?
         <EmptyPage isLoading={isLoading} /> :
-        <SwaggerViewer swaggerContent={swaggerContentMap[swaggersMap[selectedSwaggerTitle]?.id]} />
+        <SwaggerPanel
+          swaggerContent={swaggerContentMap[selectedSwagger.id]}
+          selectedSwagger={selectedSwagger}
+          onSwaggerUpdated={(updatedSwagger) => {
+            const updatedSwaggersMap = {
+              ...swaggersMap,
+              [updatedSwagger.id]: updatedSwagger
+            }
+            setSwaggersMap(updatedSwaggersMap)
+            setSelectedSwagger(updatedSwagger)
+          }}
+        />
       }
     </div>
   )

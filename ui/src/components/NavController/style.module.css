@@ -1,0 +1,134 @@
+@import '../../styles/colors.css';
+
+.navController {
+  width: 32px;
+  height: 32px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-blue-selected);
+  font-weight: 700;
+  margin-right: 12px;
+  border: 1.5px solid var(--color-blue-selected);
+  transition: all .15s;
+  cursor: pointer;
+}
+
+.navController:hover {
+  background-color: var(--color-blue-background);
+  color: var(--color-white-text);
+}
+
+.navController--open {
+  width: 220px;
+  height: 34px;
+  border-radius: 10px;
+  cursor: auto;
+}
+
+.navController--open:hover {
+  background-color: var(--color-white-default);
+}
+
+.navController--failure {
+  border-color:  var(--color-red-error);
+}
+
+.navController .openBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px 0 8px;
+}
+
+.navController .openBox .closeBtn {
+  margin-left: 2px;
+  color: var(--color-dark-blue);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 2px;
+  border-radius: 6px; 
+  transition: all .2s;
+}
+.navController .openBox .closeBtn:hover {
+  border-color: var(--color-dark-blue);
+}
+
+.navController .openBox .saveBtn {
+  height: 21px;
+  width: 21px;
+  background: var(--color-blue-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s;
+  margin-left: 10px;
+  color: var(--color-white-default)
+}
+
+.navController .openBox .saveBtn:hover {
+  background: var(--color-blue-hover);
+}
+
+.navController .openBox .saveBtn--success, 
+.navController .openBox .saveBtn--success:hover{
+  transition: all .5s;
+  background-color: var(--color-green-default);
+  pointer-events: none;
+}
+
+.navController .openBox .saveBtn--disabled {
+  background-color: var(--color-gray-background);
+  color: var(--color-dark-gray);
+
+  pointer-events: none;
+}
+
+.navController .openBox .saveBtnIcon {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.navController .openBox .controllerInput {
+  flex: 1 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-blue-selected);
+}
+
+.navController .openBox .controllerInput::placeholder {
+  font-weight: 100;
+  letter-spacing: 0.5px;
+}
+
+.navController .spinner {
+  width: 10px;
+  height: 10px;
+  animation: spinner-8k6ao5mn 3s infinite;
+  border-radius: 50%;
+  background-color: var(--color-white-default);
+  transform-origin: center;
+}
+
+@keyframes spinner-8k6ao5mn {
+  0% {
+     transform: perspective(96px) rotateY(0deg);
+  }
+
+  10% {
+     transform: perspective(96px) rotateY(-65deg);
+  }
+
+  90%, 100% {
+     transform: perspective(96px) rotateY(2880deg);
+  }
+}

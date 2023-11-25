@@ -19,6 +19,7 @@ interface Env {
   FORCE_SHUTDOWN_TIMEOUT_SEC: number;
   SHUTDOWN_INITIAL_DELAY_SEC: number;
   SERVER_KEEP_ALIVE: number;
+  ENABLE_CORS: boolean;
 }
 
 loadSecretsIfNeeded();
@@ -34,10 +35,11 @@ const env: Env = {
     process.env.SQLITE_STORAGE_PATH || './db/swaggipedia.sqlite',
   PORT: Number(process.env.PORT) || 3000,
   FORCE_SHUTDOWN_TIMEOUT_SEC:
-    Number(process.env.FORCE_SHUTDOWN_TIMEOUT_SEC) || 30,
+    Number(process.env.FORCE_SHUTDOWN_TIMEOUT_SEC) || 3,
   SHUTDOWN_INITIAL_DELAY_SEC:
-    Number(process.env.SHUTDOWN_INITIAL_DELAY_SEC) || 5,
+    Number(process.env.SHUTDOWN_INITIAL_DELAY_SEC) || 1,
   SERVER_KEEP_ALIVE: Number(process.env.SERVER_KEEP_ALIVE),
+  ENABLE_CORS: !!process.env.ENABLE_CORS,
 };
 
 export default env;

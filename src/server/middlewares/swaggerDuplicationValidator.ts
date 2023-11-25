@@ -11,8 +11,8 @@ export const swaggerDuplicationValidator = (): ((
   return async (ctx: Context, next: Next) => {
     const requestBody = ctx.request.body as SwaggerRequestBody;
 
-    if (requestBody.file_content) {
-      const swaggerName = requestBody.name?.toLowerCase();
+    if (requestBody.title) {
+      const swaggerName = requestBody.title?.toLowerCase();
 
       let existingSwaggers = await SwaggersRepository.getAllSwaggers(true);
       if (ctx.request.method === 'PUT') {
@@ -22,13 +22,13 @@ export const swaggerDuplicationValidator = (): ((
       }
 
       const existingSwaggerNames = existingSwaggers.map((swagger) =>
-        swagger.name.toLowerCase()
+        swagger.title.toLowerCase()
       );
 
       if (existingSwaggerNames.includes(swaggerName)) {
         ctx.throw(
           StatusCodes.CONFLICT,
-          ErrorMessages.SWAGGER_NAME_ALREADY_EXISTS
+          ErrorMessages.SWAGGER_TITLE_ALREADY_EXISTS
         );
       }
     }

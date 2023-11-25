@@ -18,9 +18,13 @@ export const up = async ({ context }) => {
       allowNull: false,
       primaryKey: true,
     },
-    name: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    aliases: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     file_content_id: {
       type: DataTypes.UUID,
@@ -29,6 +33,14 @@ export const up = async ({ context }) => {
         model: TableNames.SWAGGERS_CONTENT_TABLE_NAME,
         key: 'id',
       },
+    },
+    repository_url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    file_source_path: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     created_at: {
       type: DataTypes.DATE,

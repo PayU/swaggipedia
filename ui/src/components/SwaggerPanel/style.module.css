@@ -1,0 +1,84 @@
+@import '../../styles/colors.css';
+
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-x: hidden;
+  transition: all .7s;
+}
+
+.swaggerViewer {
+  flex: 1;
+  padding: 45px 40px 10px;
+  position: relative;
+  overflow-y: scroll;
+  transition: all .7s;
+}
+
+.swaggerNav {
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 70px;
+  border-bottom: 1px solid #d7d7d7;
+  background-color: var(--color-white-background);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 0px 6px 0px rgb(206 206 206);
+  padding: 0 10px 0 15px;
+}
+
+.swaggerNavLinkers {
+  display: flex;
+}
+
+.swaggerNavLinkers .linker {
+  display: flex;
+  align-items: center;
+  margin-left: 35px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--color-dark-blue);
+  font-size: 13px;
+  font-weight: 600;
+  height: 21px;
+  background-color: var(--color-gray-background);
+  transition: all .15s;
+}
+
+.swaggerNavLinkers .linker:hover {
+  background-color: var(--color-gray-background-hover);
+}
+
+.swaggerNavLinkers .linker .icon {
+  width: 21px;
+  height: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-blue-selected);
+  border-radius: 50%;
+  margin-right: 8px;
+  color: var(--color-white-default);
+}
+
+.swaggerNavLinkers .linker.code i {
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.swaggerNavLinkers .linker.repo i {
+  color: var(--color-blue-selected);
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+.swaggerNavControllers {
+  display: flex;
+  align-items: center;
+  padding-left: 22px;
+  border-left: 1px solid #dadada;
+}

@@ -9,15 +9,22 @@ export class SwaggersRepository {
   public static async getAllSwaggers(
     includeFileContent = false
   ): Promise<SwaggerModel[]> {
-    const swaggers = await SwaggerModel.findAll({
-      include: includeFileContent ? SwaggerModel.FileContent : undefined,
+    const swaggers = (
+      await SwaggerModel.findAll({
+        include: includeFileContent ? SwaggerModel.FileContent : undefined,
+      })
+    ).map((swagger) => {
+      swagger.aliases = JSON.parse(swagger.aliases);
+      return swagger;
     });
 
     return swaggers;
   }
   public static async getSwagger(id: string): Promise<SwaggerModel> {
-    const swaggers = await SwaggerModel.findByPk(id);
-    return swaggers;
+    const swagger = await SwaggerModel.findByPk(id);
+    swagger.aliases = JSON.parse(swagger.aliases);
+
+    return swagger;
   }
 
   public static async createSwagger(
@@ -42,12 +49,13 @@ export class SwaggersRepository {
     existingResource: SwaggerModel,
     payload: SwaggerRequestBody
   ): Promise<void> {
-    if (payload.name) {
-      await existingResource.update({
-        name: payload.name,
-        updated_at: new Date(),
-      });
-    }
+    await existingResource.update({
+      title: payload.title,
+      aliases: payload.aliases ? JSON.stringify(payload.aliases) : undefined,
+      repository_url: payload.repository_url,
+      file_source_path: payload.file_source_path,
+      updated_at: new Date(),
+    });
 
     if (payload.file_content) {
       await SwaggerModel.FileContent.update(

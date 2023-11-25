@@ -1,34 +1,46 @@
 import React, { useEffect, useState } from 'react'
-import styles from './style.module.css'
+import isEmpty from 'lodash/isEmpty'
+import Tippy from '@tippyjs/react';
 import classNames from 'classnames'
 import FontAwesome from '../FontAwesome'
-import logo from './assets/logo.png'
+import logo from './assets/swaggipedia_new.png'
 
-export default function SideBar({ swaggerTitles, selectedSwaggerTitle, onSwaggerSelected }) {
-  const [filteredSwaggerTitles, setFilteredSwaggerTitles] = useState([])
+import styles from './style.module.css'
+
+export default function SideBar({ swaggersMap, selectedSwagger, onSwaggerSelected }) {
+  const [filteredSwaggerList, setFilteredSwaggerList] = useState([])
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    setFilteredSwaggerTitles(swaggerTitles)
-  }, [swaggerTitles])
+    setFilteredSwaggerList(Object.values(swaggersMap))
+  }, [swaggersMap])
 
   useEffect(() => {
-    const filteredSwaggerTitles = swaggerTitles.filter(swaggerTitle => {
-      return swaggerTitle.toLowerCase().includes(searchValue.toLowerCase())
-    })
-    setFilteredSwaggerTitles(filteredSwaggerTitles);
-  }, [swaggerTitles, searchValue])
+    const filteredSwaggers = Object.values(swaggersMap).filter(swagger => {
+      let isMatch = swagger.title.toLowerCase().includes(searchValue.toLowerCase());
 
-  const disabled = swaggerTitles.length === 0;
+      if (searchValue.length > 0 && !isMatch) {
+        const alias = (swagger.aliases.find(alias => alias.toLowerCase().includes(searchValue.toLowerCase())))
+
+        if (alias) {
+          isMatch = true;
+          swagger.alias = alias;
+        }
+      }
+
+      return isMatch;
+    })
+
+    setFilteredSwaggerList(filteredSwaggers);
+  }, [swaggersMap, searchValue])
+
+  const disabled = isEmpty(swaggersMap);
 
   return (
     <div className={styles.sideBar}>
       {/* Banner */}
       <div className={styles.banner}>
-        <div className={styles.logoPlaceholder}>
-          <img src={logo} alt='logo' height={33} />
-        </div>
-        <div className={styles.text}>Swaggipedia</div>
+        <img src={logo} alt='logo' height={58} />
       </div>
 
       {/* Search */}
@@ -42,14 +54,18 @@ export default function SideBar({ swaggerTitles, selectedSwaggerTitle, onSwagger
       {/* Swagger List */}
       <div className={styles.navigation}>
         {
-          filteredSwaggerTitles.map((swaggerTitle) => (
-            <div
-              key={swaggerTitle}
-              className={classNames(styles.swagger, { [styles.selectedSwagger]: selectedSwaggerTitle === swaggerTitle })}
-              onClick={() => onSwaggerSelected(swaggerTitle)}
-            >
-              {swaggerTitle}
-            </div>
+          filteredSwaggerList.map((swagger) => (
+            <Tippy disabled={swagger.title.length < 26} content={swagger.title || ''} delay={500}>
+              <div
+                key={swagger.id}
+                className={classNames(styles.swagger, { [styles.selectedSwagger]: selectedSwagger.title === swagger.title })}
+                onClick={() => onSwaggerSelected(swaggersMap[swagger.id])}
+              >
+                {(searchValue.length && swagger.alias) ? <span className={styles.alias}>{`[@${swagger.alias}]`}</span> : null}
+                <span>{swagger.title}</span>
+
+              </div>
+            </Tippy>
           ))
         }
       </div>

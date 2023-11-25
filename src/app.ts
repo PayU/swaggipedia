@@ -5,6 +5,7 @@ import healthRouter from './server/health/router';
 import uiRouter, { serveStaticFiles } from './server/ui/router';
 import swaggersRouter from './server/swaggers/router';
 import errorHandler from './server/middlewares/errorHandler';
+import corsHandler from './server/middlewares/corsHandler';
 
 process.on('uncaughtException', (error: Error) => {
   logger.error(error, `uncaughtException detected`);
@@ -19,6 +20,7 @@ export function createApp(): Koa {
   const app = new Koa();
 
   // Register Middlewares
+  corsHandler(app);
   app.use(errorHandler());
   app.use(koaBodyparser());
 

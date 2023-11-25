@@ -2,11 +2,6 @@ import { v4 } from 'uuid';
 import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
 import { TableNames } from '../connectors/consts';
 
-export enum SwaggerFormats {
-  Yaml = 'yaml',
-  Json = 'json',
-}
-
 export interface SwaggerFileContent {
   id: string;
   file_content: string;
@@ -14,15 +9,21 @@ export interface SwaggerFileContent {
 
 export interface InternalSwaggerResource {
   id: string;
-  name: string;
+  title: string;
+  aliases?: string;
   file_content_id?: string;
   FileContent?: SwaggerFileContent;
+  repository_url: string;
+  file_source_path?: string;
   created_at?: Date;
   updated_at?: Date;
 }
 export type SwaggerRequestBody = {
-  name: string;
+  title: string;
+  aliases?: string;
   file_content: string;
+  repository_url: string;
+  file_source_path?: string;
 };
 export type SwaggerResource = Omit<
   InternalSwaggerResource,
@@ -38,8 +39,11 @@ class SwaggerModel
   public static FileContent: ModelStatic<Model<SwaggerFileContent>>;
 
   public id!: string;
-  public name!: string;
+  public title!: string;
+  public aliases?: string;
   public readonly file_content_id!: string;
+  public repository_url!: string;
+  public file_source_path?: string;
   public readonly created_at!: Date;
   public readonly updated_at!: Date;
 
@@ -68,9 +72,21 @@ class SwaggerModel
           type: DataTypes.UUID,
           primaryKey: true,
         },
-        name: {
+        title: {
           type: DataTypes.STRING,
           allowNull: false,
+        },
+        aliases: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
+        repository_url: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        file_source_path: {
+          type: DataTypes.STRING,
+          allowNull: true,
         },
       },
       {
@@ -92,8 +108,11 @@ class SwaggerModel
 
     return {
       id: v4(),
-      name: requestBody.name,
+      title: requestBody.title,
+      aliases: JSON.stringify(requestBody.aliases || []),
       file_content: requestBody.file_content,
+      repository_url: requestBody.repository_url,
+      file_source_path: requestBody.file_source_path,
       created_at: now,
       updated_at: now,
     };
@@ -116,8 +135,11 @@ class SwaggerModel
   ): SwaggerResource {
     return {
       id: swagger.id,
-      name: swagger.name,
+      title: swagger.title,
+      aliases: swagger.aliases,
       file_content: swaggerFileContent.file_content,
+      repository_url: swagger.repository_url,
+      file_source_path: swagger.file_source_path,
       created_at: swagger.created_at,
       updated_at: swagger.updated_at,
     };

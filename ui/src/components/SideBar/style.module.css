@@ -8,7 +8,6 @@
     flex-direction: column;
     transition: all .7s;
     position: relative;
-    user-select: none;
     width: 270px;
     min-width: 270px;
     max-width: 270px;
@@ -18,25 +17,11 @@
 
 .banner {
     background-color: var(--color-dark-blue);
-    padding: 19px 27px;
+    padding: 6px 0;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #2c4466;
-}
-
-.banner .logoPlaceholder {
-    background-color: #2ecb85;
-    border-radius: 50px;
-    width: 33px;
-    height: 33px;
-    margin-right: 19px;
-}
-
-.banner .text {
-    color: white;
-    font-size: 25px;
-    font-family: 'Pacifico', cursive;
+    border-bottom: 1px solid var(--color-blue-selected);
 }
 
 .swaggerSearch {
@@ -44,12 +29,12 @@
 }
 
 .swaggerSearch .inputWrapper {
-    background-color: var(--color-white-background);
+    background-color: var(--color-dark-blue);
     border-radius: 10px;
     height: 42px;
-    border: 1px solid #08203b69;
     display: flex;
     align-items: center;
+    border: 1.5px solid var(--color-blue-selected);
 }
 .swaggerSearch .inputWrapper--disabled {
     background-color: var(--color-disabled-gray-background);
@@ -57,8 +42,8 @@
 }
 
 .swaggerSearch .inputWrapper .searchIcon {
-    color: var(--color-dark-blue);
-    margin: 0 10px 0 15px;
+    color: var(--color-gray-background);
+    margin: 0 5px 0 15px;
     font-size: 14px;
 }
 .swaggerSearch .inputWrapper--disabled .searchIcon {
@@ -68,16 +53,16 @@
 .swaggerSearch .inputWrapper input {
     background: none;
     border: none;
-    color: var(--color-dark-blue);
+    color: var(--color-gray-background);
     outline: none;
-    font-size: 15px;
+    font-size: 14px;
 }
 .swaggerSearch .inputWrapper input:disabled {
     cursor: not-allowed;
 }
 
 .swaggerSearch .inputWrapper input::placeholder {
-    color: var(--color-dark-blue);
+    color: var(--color-white-text);
     font-size: 13px;
 }
 
@@ -93,21 +78,27 @@
 
 .navigation .swagger {
     color: var(--color-white-text);
-    padding: 21px 10px 21px 35px;
+    padding: 21px 35px;
     font-size: 13px;
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
-    border-bottom: 1px solid var(--color-blue-border);
+    border-bottom: 1px solid var(--color-blue-selected);
     transition: all 0.15s;
 }
 
 .navigation .swagger:first-child {
-    border-top: 1px solid var(--color-blue-border);
+    border-top: 1px solid var(--color-blue-selected);
 }
 
 .navigation .swagger:hover , .navigation .swagger.selectedSwagger {
-    background-color: var(--color-blue-border);
+    background-color: var(--color-blue-selected);
+}
+
+.alias {
+  font-weight: 400;
+  color: var(--color-green-default);
+  margin-right: 7px;
 }
