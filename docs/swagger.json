@@ -13,12 +13,25 @@
   "paths": {
     "/v1/swaggers": {
       "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "expand",
+            "description": "a parameter for including swagger file content to the response swaggers list",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "file_content"
+              ]
+            }
+          }
+        ],
         "tags": [
           "Swaggers"
         ],
         "summary": "Get All Swaggers",
         "description": "Get all swaggers (APIs) of the API-Catalog",
-        "operationId": "getSwagger",
+        "operationId": "getSwaggers",
         "responses": {
           "200": {
             "description": "OK",
@@ -48,11 +61,6 @@
         "summary": "Create Swagger",
         "description": "Add swagger to the API-Catalog",
         "operationId": "createSwagger",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/XSwaggerFormat"
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -94,6 +102,32 @@
           }
         }
       ],
+      "get": {
+        "tags": [
+          "Swaggers"
+        ],
+        "summary": "Get Swagger",
+        "description": "Get a swagger in the API-Catalog",
+        "operationId": "getSwagger",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwaggerResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
       "put": {
         "tags": [
           "Swaggers"
@@ -101,11 +135,6 @@
         "summary": "Update Swagger",
         "description": "Update a swagger in the API-Catalog",
         "operationId": "updateSwagger",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/XSwaggerFormat"
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -162,22 +191,6 @@
     }
   },
   "components": {
-    "parameters": {
-      "XSwaggerFormat": {
-        "name": "x-swagger-format",
-        "in": "header",
-        "description": "The swagger format",
-        "example": "yaml",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "enum": [
-            "yaml",
-            "json"
-          ]
-        }
-      }
-    },
     "responses": {
       "NoContent": {
         "description": "No Content."
@@ -277,8 +290,29 @@
         "example": "2020-05-20T00:00:00Z",
         "readOnly": true
       },
-      "SwaggerName": {
-        "description": "The swagger name",
+      "SwaggerTitle": {
+        "description": "The swagger title",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000
+      },
+      "SwaggerAliases": {
+        "description": "The swagger title",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        }
+      },
+      "SwaggerRepositoryUrl": {
+        "description": "The repository url contains the swagger file",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000
+      },
+      "SwaggerSourceFilePath": {
+        "description": "The repository path to the swagger source file",
         "type": "string",
         "minLength": 1,
         "maxLength": 1000
@@ -291,16 +325,26 @@
       "SwaggerPostRequest": {
         "type": "object",
         "required": [
-          "name",
-          "data"
+          "title",
+          "file_content",
+          "repository_url"
         ],
         "additionalProperties": false,
         "properties": {
-          "name": {
-            "$ref": "#/components/schemas/SwaggerName"
+          "title": {
+            "$ref": "#/components/schemas/SwaggerTitle"
           },
-          "data": {
+          "aliases": {
+            "$ref": "#/components/schemas/SwaggerAliases"
+          },
+          "file_content": {
             "$ref": "#/components/schemas/SwaggerData"
+          },
+          "repository_url": {
+            "$ref": "#/components/schemas/SwaggerRepositoryUrl"
+          },
+          "file_source_path": {
+            "$ref": "#/components/schemas/SwaggerSourceFilePath"
           }
         }
       },
@@ -308,11 +352,20 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "name": {
-            "$ref": "#/components/schemas/SwaggerName"
+          "title": {
+            "$ref": "#/components/schemas/SwaggerTitle"
           },
-          "data": {
+          "aliases": {
+            "$ref": "#/components/schemas/SwaggerAliases"
+          },
+          "file_content": {
             "$ref": "#/components/schemas/SwaggerData"
+          },
+          "repository_url": {
+            "$ref": "#/components/schemas/SwaggerRepositoryUrl"
+          },
+          "file_source_path": {
+            "$ref": "#/components/schemas/SwaggerSourceFilePath"
           }
         }
       },
@@ -320,8 +373,10 @@
         "type": "object",
         "required": [
           "id",
-          "name",
-          "data",
+          "title",
+          "file_content",
+          "repository_url",
+          "file_source_path",
           "created_at",
           "updated_at"
         ],
@@ -330,11 +385,20 @@
           "id": {
             "$ref": "#/components/schemas/SwaggerId"
           },
-          "name": {
-            "$ref": "#/components/schemas/SwaggerName"
+          "title": {
+            "$ref": "#/components/schemas/SwaggerTitle"
           },
-          "data": {
+          "aliases": {
+            "$ref": "#/components/schemas/SwaggerAliases"
+          },
+          "file_content": {
             "$ref": "#/components/schemas/SwaggerData"
+          },
+          "repository_url": {
+            "$ref": "#/components/schemas/SwaggerRepositoryUrl"
+          },
+          "file_source_path": {
+            "$ref": "#/components/schemas/SwaggerSourceFilePath"
           },
           "created_at": {
             "$ref": "#/components/schemas/CreatedAt"
